@@ -20,6 +20,9 @@ namespace Domain.Entities
         [MaxLength(100)]
         public string Surname { get; set; }
         [Required]
+        [MaxLength(100)]
+        public string ClubName { get; set; }
+        [Required]
         public int Age { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
@@ -31,6 +34,17 @@ namespace Domain.Entities
         public Fotballer()
         {
             
+        }
+        public Fotballer(int id, string name, string surname, string clubName, int age, DateTime dateOfBirth, int goals, int assists)
+        {
+            ID = id;
+            Name = name;
+            ClubName = clubName;
+            Age = age;
+            DateOfBirth = dateOfBirth;
+            Goals = goals;
+            Assists = assists;
+            Surname = surname;
         }
     }
 }

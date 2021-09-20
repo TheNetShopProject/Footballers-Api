@@ -49,7 +49,7 @@ namespace Infrastructure.Repositiries
 
         public IEnumerable<Fotballer> GetByClubId(int id)
         {
-
+       
             return _dbContext.Fotballers
                 .Include(x => x.Club).
                 Where(x => x.Club.ID == id);
