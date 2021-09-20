@@ -21,7 +21,7 @@ namespace Application.ModelsDTO
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Fotballer, FotballerDTO>()
-                .ForMember(x => x.ClubName, y => y.MapFrom(z => z.Club.Name))
+                .ForMember(x => x.ClubName, y => y.MapFrom(z => z.Club.FullName))
                 .ForMember(x => x.League, y => y.MapFrom(z => z.Club.League))
                 .ForMember(x => x.ClubCreatedYear, y => y.MapFrom(z => z.Club.CreatedYear));
         }
