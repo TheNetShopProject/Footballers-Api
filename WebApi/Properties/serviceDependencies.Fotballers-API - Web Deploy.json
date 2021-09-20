@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/Fotballers-API-apim/apis/FotballerAPI",
+      "type": "apis.azure",
+      "apiEndpoint": "https://fotballers-api-apim.azure-api.net/v1"
+    }
+  }
+}
