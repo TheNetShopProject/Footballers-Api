@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
 using Application.Interfaces;
 using Application.Mappings;
+using Application.Middleware;
 using Application.Services;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -11,7 +14,11 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IFootballerService, FotballerService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<RequestTimeHandlingMiddleware>();
             return services;
         }
     }

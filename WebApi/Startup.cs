@@ -16,6 +16,7 @@ using Domain.Interfaces;
 using Infrastructure.Repositiries;
 using Application.Interfaces;
 using Application.Mappings;
+using Application.Middleware;
 using WebApi.Installers;
 
 namespace WebApi
@@ -47,6 +48,8 @@ namespace WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<RequestTimeHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

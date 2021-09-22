@@ -12,5 +12,6 @@ namespace Infrastructure.Data
 
         public DbSet<Fotballer> Fotballers { get; set; }
         public DbSet<Club> Clubs { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

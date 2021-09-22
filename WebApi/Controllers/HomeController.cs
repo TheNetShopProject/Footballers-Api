@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("clubs{ID}")]
+        [Route("clubs/{ID}")]
         public IActionResult GetFotballersByClubId(int ID)
         {
             var fotballers = _service.GetFotballersByClubId(ID);
