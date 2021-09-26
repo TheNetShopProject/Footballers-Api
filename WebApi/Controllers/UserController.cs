@@ -8,7 +8,7 @@ using Application.ModelsDTO;
 
 namespace WebApi.Controllers
 {
-    [Route("api/Users")]
+    [Route("api/")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -19,10 +19,19 @@ namespace WebApi.Controllers
             _service = service;
         }
         [HttpPost]
+        [Route("Create")]
         public IActionResult CreateUser(CreateUserDTO user)
         {
             _service.AddUser(user);
             return Created("Created", user);
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public IActionResult Login(LoginDTO user)
+        {
+            _service.Login(user);
+            return Ok();
         }
     }
 }

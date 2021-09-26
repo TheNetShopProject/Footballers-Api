@@ -1,10 +1,14 @@
-﻿using Application.Interfaces;
+﻿using System;
+using Application.Exceptions;
+using Application.Interfaces;
 using Application.ModelsDTO;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using NLog.Fluent;
+using Application.Exceptions;
 
 namespace Application.Services
 {
@@ -29,6 +33,18 @@ namespace Application.Services
             _service.CreateUser(UserToAdd);
             _logger.LogInformation(Utilities.LoggerUtils.DeserializeObjectToString(user));
             return _mapper.Map<UserDTO>(UserToAdd);
+        }
+
+        public string Login(LoginDTO user)
+        {
+            var Login = _mapper.Map<User>(user);
+            Login.Password =_service.Login(Login.Email);
+            var token = _hasher.VerifyHashedPassword(Login, Login.Password, user.Password);
+            if (token == PasswordVerificationResult.Success)
+                return "Logged in";
+            else
+                throw new NotFoundExceptions("Loggin failed");
+
         }
     }
 }

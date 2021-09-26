@@ -4,7 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IUserRepository
     {
-        User GetUserByEmailAndPassword(string email, string password);
+        string Login(string email);
         User CreateUser(User user);
     }
 }

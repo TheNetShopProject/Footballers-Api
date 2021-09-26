@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using System.Linq;
+using Application.Exceptions;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +15,13 @@ namespace Infrastructure.Repositiries
         {
             _context = context;
         }
-        public User GetUserByEmailAndPassword(string email, string password)
+        public string Login(string email )
         {
-            throw new System.NotImplementedException();
+            var LoginUser = _context.Users.FirstOrDefault(x => x.Email == email);
+            if (LoginUser != null)
+                return LoginUser.Password;
+            else
+                throw new NotFoundExceptions($"User with email {email} not fouund");
         }
 
         public User CreateUser(User user)
@@ -24,5 +30,6 @@ namespace Infrastructure.Repositiries
             _context.SaveChanges();
             return user;
         }
+
     }
 }
