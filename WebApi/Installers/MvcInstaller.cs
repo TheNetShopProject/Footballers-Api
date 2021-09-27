@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.Repositiries;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ namespace WebApi.Installers
         {
             services.AddApplication();
             services.AddInfrastructure();
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
         }
     }
 }

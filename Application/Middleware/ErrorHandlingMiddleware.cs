@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,11 @@ namespace Application.Middleware
             try
             {
                 await next.Invoke(context);
+            }
+            catch (UnauthorizedException e)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync(e.Message);
             }
             catch (RequestTimeError e)
             {

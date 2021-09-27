@@ -15,7 +15,6 @@ namespace Application
         {
             services.AddScoped<IFootballerService, FotballerService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<RequestTimeHandlingMiddleware>();

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.ModelsDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class FotballerController : ControllerBase
     {
@@ -19,6 +21,7 @@ namespace WebApi.Controllers
             _service = service;
         }
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult Get()
         {
             var fotballers = _service.getAllFotballers();
@@ -26,6 +29,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{ID}")]
         public IActionResult GetByID(int ID)
         {
@@ -42,6 +46,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddNewFotballer(CreateFotballerDTO fotballer)
         {
             var newFotballer = _service.AddFotballer(fotballer);

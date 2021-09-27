@@ -30,8 +30,8 @@ namespace WebApi.Controllers
         [Route("Login")]
         public IActionResult Login(LoginDTO user)
         {
-            _service.Login(user);
-            return Ok();
+            string token = _service.Login(user);
+            return Ok(token);
         }
     }
 }

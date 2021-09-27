@@ -49,7 +49,8 @@ namespace WebApi
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
-            app.UseMiddleware<RequestTimeHandlingMiddleware>(); // middleware
+            app.UseMiddleware<RequestTimeHandlingMiddleware>();
+            app.UseAuthentication(); 
             app.UseHttpsRedirection();
 
             app.UseRouting();

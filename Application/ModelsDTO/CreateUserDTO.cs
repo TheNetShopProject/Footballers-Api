@@ -9,21 +9,14 @@ namespace Application.ModelsDTO
 {
     public class CreateUserDTO : IMap
     {
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
-        [Required]
-        [MaxLength(30)]
         public string FirstName { get; set; }
-        [Required]
-        [MaxLength(30)]
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        [Required]
-        [MaxLength(30)]
-        [MinLength(6)]
+
         public string Password { get; set; }
-        public virtual int RoleId { get; set; } = 1;
+
+        public string ConfirmPassword { get; set; }
 
         public void Mapping(Profile profile)
         {

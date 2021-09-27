@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.ModelsDTO;
@@ -9,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using NLog.Fluent;
 using Application.Exceptions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services
 {
@@ -17,19 +21,17 @@ namespace Application.Services
         private readonly IMapper _mapper;
         private readonly ILogger<UserService> _logger;
         private readonly IUserRepository _service;
-        private readonly IPasswordHasher<User> _hasher;
 
-        public UserService(IMapper mapper, ILogger<UserService> logger, IUserRepository service, IPasswordHasher<User> hasher)
+        public UserService(IMapper mapper, ILogger<UserService> logger, IUserRepository service)
         {
             _mapper = mapper;
             _logger = logger;
             _service = service;
-            _hasher = hasher;
         }
         public UserDTO AddUser(CreateUserDTO user)
         {
             var UserToAdd = _mapper.Map<User>(user);
-            UserToAdd.Password = _hasher.HashPassword(UserToAdd, UserToAdd.Password);
+            UserToAdd.RoleId = 1; // Standard user role
             _service.CreateUser(UserToAdd);
             _logger.LogInformation(Utilities.LoggerUtils.DeserializeObjectToString(user));
             return _mapper.Map<UserDTO>(UserToAdd);
@@ -38,13 +40,8 @@ namespace Application.Services
         public string Login(LoginDTO user)
         {
             var Login = _mapper.Map<User>(user);
-            Login.Password =_service.Login(Login.Email);
-            var token = _hasher.VerifyHashedPassword(Login, Login.Password, user.Password);
-            if (token == PasswordVerificationResult.Success)
-                return "Logged in";
-            else
-                throw new NotFoundExceptions("Loggin failed");
-
+            string token = _service.Login(Login.Email, user.Password);
+            return token; 
         }
     }
 }
